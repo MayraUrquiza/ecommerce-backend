@@ -1,0 +1,28 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "description": "Proyecto final del curso de backend de Coderhouse",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "watch": "nodemon ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayraUrquiza/ecommerce-backend.git"
+  },
+  "author": "Mayra Urquiza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MayraUrquiza/ecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/MayraUrquiza/ecommerce-backend#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "firebase-admin": "^10.0.2",
+    "log4js": "^6.4.2",
+    "mongoose": "^6.2.4"
+  }
+}
