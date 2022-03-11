@@ -1,4 +1,4 @@
-class ProductDTO {
+class CartProductDTO {
   constructor({
     id,
     name,
@@ -6,8 +6,8 @@ class ProductDTO {
     code,
     price,
     thumbnail,
-    stock,
     timestamp,
+    quantity,
   }) {
     if (id) this.id = id;
     this.name = name;
@@ -15,14 +15,15 @@ class ProductDTO {
     this.code = code;
     this.price = typeof price === "string" ? parseInt(price) : price;
     this.thumbnail = thumbnail;
-    this.stock = typeof stock === "string" ? parseInt(stock) : stock;
     this.timestamp = timestamp ?? Date.now();
+    this.quantity = quantity ?? 1;
   }
 }
 
 const getDTO = (dao) => {
-  if (Array.isArray(dao)) return dao.map((product) => new ProductDTO(product));
-  return new ProductDTO(dao);
+  if (Array.isArray(dao))
+    return dao.map((product) => new CartProductDTO(product));
+  return new CartProductDTO(dao);
 };
 
 export default getDTO;

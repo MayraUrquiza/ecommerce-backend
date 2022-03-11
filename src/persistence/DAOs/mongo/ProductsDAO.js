@@ -42,7 +42,9 @@ class ProductsDAOMongo {
 
   async updateById(id, product) {
     try {
-      const result = await ProductModel.findByIdAndUpdate(id, product).lean();
+      const result = await ProductModel.findByIdAndUpdate(id, product, {
+        new: true,
+      }).lean();
 
       if (!result) throw new CustomError(404, "producto no encontrado", { id });
 
@@ -58,7 +60,9 @@ class ProductsDAOMongo {
 
   async deleteById(id) {
     try {
-      const result = await ProductModel.findByIdAndRemove(id).lean();
+      const result = await ProductModel.findByIdAndRemove(id, {
+        new: true,
+      }).lean();
 
       if (!result) throw new CustomError(404, "producto no encontrado", { id });
       return getDTO({ ...result, id: result._id });

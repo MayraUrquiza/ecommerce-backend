@@ -28,7 +28,13 @@ class ProductController {
   saveProduct = async (req, res) => {
     try {
       const result = await this.service.saveProduct(req.body);
-      res.status(201).json({ status: 201, description: "El producto fue creado.", product: result });
+      res
+        .status(201)
+        .json({
+          status: 201,
+          description: "El producto fue creado.",
+          product: result,
+        });
     } catch (error) {
       res.status(error.status || 500).json({ error });
     }
@@ -41,7 +47,11 @@ class ProductController {
 
       res
         .status(200)
-        .json({ status: 200, description: "El producto fue actualizado.", product: result });
+        .json({
+          status: 200,
+          description: "El producto fue actualizado.",
+          product: result,
+        });
     } catch (error) {
       res.status(error.status || 500).json({ error });
     }
@@ -54,7 +64,11 @@ class ProductController {
 
       res
         .status(200)
-        .json({ status: 200, description: "El producto fue eliminado.", product: result });
+        .json({
+          status: 200,
+          description: "El producto fue eliminado.",
+          product: result,
+        });
     } catch (error) {
       res.status(error.status || 500).json({ error });
     }

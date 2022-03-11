@@ -1,4 +1,4 @@
-import configData from "../configDB.js";
+import configData from "../../../configDB.js";
 import CartsDAOMongo from "../mongo/CartsDAO.js";
 import CartsDAOFirestore from "../firestore/CartsDAO.js";
 import CartsDAOFilesystem from "../filesystem/CartsDAO.js";
