@@ -4,6 +4,7 @@ import { PORT } from "./config.js";
 import logger from "./utils/Logger.js";
 import routerProducts from "./routers/ProductsRouter.js";
 import routerCarts from "./routers/CartsRouter.js";
+import routerUsers from "./routers/UsersRouter.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ Persistence.connect();
 
 app.use("/api/productos", routerProducts);
 app.use("/api/carrito", routerCarts);
+app.use("/api/usuarios", routerUsers);
 
 const server = app.listen(PORT, () =>
   logger.info(`Listen on ${server.address().port}`)
