@@ -53,6 +53,26 @@ class UsersDAOFilesystem {
     }
   }
 
+  async getByEmail(email) {
+    try {
+      await this.checkExistence();
+
+      const content = await this.getAll();
+      const user = content.find((entry) => entry.email === email);
+
+      if (!user)
+        throw new CustomError(404, "usuario no encontrado", { email });
+
+      return getDTO(user);
+    } catch (error) {
+      throw new CustomError(
+        error.status ?? 500,
+        error.description ?? `error al obtener el usuario con email ${email}`,
+        error.error ?? error
+      );
+    }
+  }
+
   async save(product) {
     try {
       await this.checkExistence();

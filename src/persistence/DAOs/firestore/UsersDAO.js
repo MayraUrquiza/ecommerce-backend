@@ -39,6 +39,25 @@ class UsersDAOFirestore {
     }
   }
 
+  async getByEmail(email) {
+    try {
+      const docRef = DB.collection(usersCollection);
+      const doc = docRef.where("email", "==", email);
+      const user = await doc.get();
+
+      if (!user || user.empty)
+        throw new CustomError(404, "usuario no encontrado", { email });
+
+      return getDTO({ ...user.docs[0].data(), id: user.docs[0].id });
+    } catch (error) {
+      throw new CustomError(
+        error.status ?? 500,
+        error.description ?? `error al obtener el usuario con email ${email}`,
+        error.error ?? error
+      );
+    }
+  }
+
   async save(user) {
     try {
       const doc = await DB.collection(usersCollection).add({ ...user });

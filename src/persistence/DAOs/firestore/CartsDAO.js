@@ -110,9 +110,9 @@ class CartsDAOFirestore {
       if (!oldCart || oldCart.empty)
         throw new CustomError(404, "carrito no encontrado", { id });
 
-      await doc.foreach((doc) => doc.delete());
+      await oldCart.docs.foreach((doc) => doc.delete());
 
-      return getDTO({ ...oldCart.data(), id });
+      return getDTO({ ...oldCart.docs[0].data(), id });
     } catch (error) {
       c;
       throw new CustomError(

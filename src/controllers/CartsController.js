@@ -25,19 +25,6 @@ class CartController {
     }
   };
 
-  saveCart = async (req, res) => {
-    try {
-      const result = await this.service.saveCart(req.body);
-      res.status(201).json({
-        status: 201,
-        description: "El carrito fue creado.",
-        cart: result,
-      });
-    } catch (error) {
-      res.status(error.status || 500).json({ error });
-    }
-  };
-
   deleteCartById = async (req, res) => {
     try {
       const { id } = req.params;

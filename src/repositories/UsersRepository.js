@@ -1,6 +1,7 @@
 import { User } from "../models/User.js";
 import UsersDAOFactory from "../persistence/DAOs/factories/UsersDAO.js";
 import getDTO from "../persistence/DTOs/UserDTO.js";
+import { createHash } from "../utils/bcrypt.js";
 
 class UsersRepository {
   constructor() {
@@ -9,7 +10,7 @@ class UsersRepository {
 
   async getAll() {
     const users = await this.dao.getAll();
-    return users.map(product => new User(product));
+    return users.map((product) => new User(product));
   }
 
   async getById(id) {
@@ -17,8 +18,15 @@ class UsersRepository {
     return new User(user);
   }
 
+  async getByEmail(email) {
+    return await this.dao.getByEmail(email);
+  }
+
   async save(user) {
-    return await this.dao.save(getDTO(user));
+    const dto = getDTO(user);
+    dto.password = createHash(user.password);
+
+    return await this.dao.save(dto);
   }
 }
 

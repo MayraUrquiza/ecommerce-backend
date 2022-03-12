@@ -37,3 +37,5 @@ export const PRODUCTS_FILE = process.env.PRODUCTS_FILE || "productos.txt";
 export const CARTS_FILE = process.env.CARTS_FILE || "carritos.txt";
 export const ORDERS_FILE = process.env.ORDERS_FILE || "ordenes.txt";
 export const USERS_FILE = process.env.USERS_FILE || "users.txt";
+export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "60s";
+export const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY || "supersecret";

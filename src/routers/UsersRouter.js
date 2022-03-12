@@ -1,13 +1,12 @@
 import { Router } from "express";
-// import AuthController from "../controller/authController.js";
 import UserController from "../controllers/UsersController.js";
+import authenticate from "../middlewares/Authentication.js";
 
 const routerUsers = Router();
-// const authController = new AuthController();
 const userController = new UserController();
 
-routerUsers.get("/", userController.getUsers);
-routerUsers.get("/:id", userController.getUserById);
+routerUsers.get("/", authenticate, userController.getUsers);
 routerUsers.post("/", userController.saveUser);
+routerUsers.post("/login", userController.login);
 
 export default routerUsers;
