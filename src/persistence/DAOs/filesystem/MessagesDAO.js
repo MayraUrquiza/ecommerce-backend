@@ -49,7 +49,11 @@ class MessagesDAOFilesystem {
 
       return newMessage;
     } catch (error) {
-      throw new CustomError(500, "error al guardar mensaje", error);
+      throw new CustomError(
+        error.status ?? 500,
+        error.description ?? "error al guardar mensaje",
+        error.error ?? error
+      );
     }
   }
 }

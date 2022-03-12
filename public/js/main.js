@@ -31,17 +31,6 @@ const addMessage = (form) => {
   return false;
 };
 
-const getMessages = () => {
-  socket.emit("getMessages");
-};
-
-const getMyMessages = () => {
-  if (!document.getElementById("email").value)
-    alert("Debe ingresar un email");
-  else
-    socket.emit("getMessages", document.getElementById("email").value);
-};
-
 const getHtml = (template, items) => {
   const render = Handlebars.compile(template);
   return render(items);

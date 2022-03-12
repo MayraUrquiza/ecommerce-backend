@@ -87,7 +87,11 @@ class UsersDAOFilesystem {
 
       return getDTO(newUser);
     } catch (error) {
-      throw new CustomError(500, "error al guardar usuario", error);
+      throw new CustomError(
+        error.status ?? 500,
+        error.description ?? "error al guardar usuario",
+        error.error ?? error
+      );
     }
   }
 }

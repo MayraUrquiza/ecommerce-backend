@@ -1,31 +1,62 @@
 import MessagesService from "../services/Messages.js";
+import logger from "../utils/Logger.js";
+import { Server as IOServer } from "socket.io";
 
 class ChatController {
   constructor() {
     this.service = new MessagesService();
   }
 
-  getMessages = async () => {
+  getMessages = async (req, res) => {
     try {
-      return await this.service.getMessages();
+      const io = new IOServer(req.app.get("http server"));
+
+      io.on("connection", async (socket) => {
+        logger.info("Nuevo cliente conectado a /chat");
+
+        const messages = await this.service.getMessages();
+
+        socket.emit("refreshMessages", messages);
+
+        socket.on("addMessage", async (message) => {
+          await this.service.saveMessage(message);
+          const messages = await this.service.getMessages();
+
+          socket.emit("refreshMessages", messages);
+        });
+      });
+
+      res.render("main", {});
     } catch (error) {
-      return { error };
+      logger.error(error);
+      res.status(error.status || 500).json({ error: error.message ?? error });
     }
   };
 
-  getMessagesByEmail = async (email) => {
+  getMessagesByEmail = async (req, res) => {
     try {
-      return await this.service.getMessages(email);
-    } catch (error) {
-      return { error };
-    }
-  };
+      const io = new IOServer(req.app.get("http server"));
+      const { email } = req.params;
 
-  saveMessage = async (message) => {
-    try {
-      return await this.service.saveMessage(message);
+      io.on("connection", async (socket) => {
+        logger.info(`Nuevo cliente conectado a /chat/${email}`);
+
+        const messages = await this.service.getMessages(email);
+
+        socket.emit("refreshMessages", messages);
+
+        socket.on("addMessage", async (message) => {
+          await this.service.saveMessage(message);
+          const messages = await this.service.getMessages(email);
+
+          socket.emit("refreshMessages", messages);
+        });
+      });
+
+      res.render("main", {});
     } catch (error) {
-      throw new CustomError(500, "error al guardar mensaje", error);
+      logger.error(error);
+      res.status(error.status || 500).json({ error: error.message ?? error });
     }
   };
 }

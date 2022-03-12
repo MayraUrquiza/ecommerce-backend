@@ -67,7 +67,11 @@ class ProductsDAOFilesystem {
 
       return getDTO(newProduct);
     } catch (error) {
-      throw new CustomError(500, "error al guardar producto", error);
+      throw new CustomError(
+        error.status ?? 500,
+        error.description ?? "error al guardar producto",
+        error.error ?? error
+      );
     }
   }
 

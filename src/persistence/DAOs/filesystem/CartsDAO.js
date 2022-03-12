@@ -66,7 +66,11 @@ class CartsDAOFilesystem {
 
       return getDTO(newCart);
     } catch (error) {
-      throw new CustomError(500, "error al crear carrito", error);
+      throw new CustomError(
+        error.status ?? 500,
+        error.description ?? "error al crear carrito",
+        error.error ?? error
+      );
     }
   }
 
@@ -113,8 +117,7 @@ class CartsDAOFilesystem {
       const content = await this.getCarts();
       const cart = content.find((cart) => cart.id === parseInt(id));
 
-      if (!cart)
-        throw new CustomError(404, "carrito no encontrado", { id });
+      if (!cart) throw new CustomError(404, "carrito no encontrado", { id });
 
       const filteredContent = content.filter(
         (cart) => cart.id !== parseInt(id)
@@ -139,8 +142,7 @@ class CartsDAOFilesystem {
       const content = await this.getCarts();
       const cart = content.find((cart) => cart.user === userId);
 
-      if (!cart)
-        throw new CustomError(404, "carrito no encontrado", { id });
+      if (!cart) throw new CustomError(404, "carrito no encontrado", { id });
 
       const filteredContent = content.filter(
         (cart) => cart.id !== parseInt(id)
