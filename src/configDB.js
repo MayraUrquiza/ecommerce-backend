@@ -17,10 +17,12 @@ import {
   CARTS_COLLECTION,
   ORDERS_COLLECTION,
   USERS_COLLECTION,
+  MESSAGES_COLLECTION,
   PRODUCTS_FILE,
   CARTS_FILE,
   ORDERS_FILE,
   USERS_FILE,
+  MESSAGES_FILE,
 } from "./config.js";
 
 const collections = {
@@ -28,6 +30,7 @@ const collections = {
   cartsCollection: CARTS_COLLECTION,
   ordersCollection: ORDERS_COLLECTION,
   usersCollection: USERS_COLLECTION,
+  messagesCollection: MESSAGES_COLLECTION,
 };
 
 export default {
@@ -60,5 +63,6 @@ export default {
     cartsFile: CARTS_FILE,
     ordersFile: ORDERS_FILE,
     usersFile: USERS_FILE,
+    messagesFile: MESSAGES_FILE,
   },
 };

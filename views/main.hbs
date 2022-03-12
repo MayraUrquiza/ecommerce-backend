@@ -1,0 +1,39 @@
+<div class="container-fluid container-md">
+  <div class="card text-dark bg-light mb-3" style="margin-top: 2%;">
+    <div class="card-body">
+      <figure class="text-center">
+        <h3>Centro de mensajes.</h3>
+      </figure>
+      <form onsubmit="return addMessage(this)">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            required="true"
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="text" class="form-label">Mensaje</label>
+          <input
+            type="text"
+            class="form-control"
+            id="message"
+            name="message"
+            placeholder="Ingrese un mensaje..."
+          />
+        </div>
+        <button type="submit" class="btn btn-success">Enviar</button>
+        <button type="button" class="btn btn-warning" onclick="return getMessages()">Todos los mensajes</button>
+        <button type="button" class="btn btn-warning" onclick="return getMyMessages()">Mis mensajes</button>
+      </form>
+      <div
+        id="messages"
+        style="height:450px; overflow-y: scroll; margin-top: 2%;"
+      ></div>
+    </div>
+  </div>
+</div>
