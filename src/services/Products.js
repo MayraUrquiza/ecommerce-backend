@@ -51,7 +51,10 @@ class ProductsService {
     if (!data.price)
       throw new CustomError(400, "el parámetro price es necesario");
     if (!data.thumbnail)
-      throw new CustomError(400, "el parámetro thumbnail es necesario");
+      throw new CustomError(
+        400,
+        "el parámetro thumbnail es necesario, puede ser una imagen o link a una imagen"
+      );
     if (!data.stock)
       throw new CustomError(400, "el parámetro stock es necesario");
   }

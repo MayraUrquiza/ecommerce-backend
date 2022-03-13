@@ -1,6 +1,5 @@
 import { JWT_EXPIRES_IN } from "../config.js";
 import UsersService from "../services/Users.js";
-import CartsService from "../services/Carts.js";
 import { isValidPassword } from "../utils/bcrypt.js";
 import { generateToken } from "../utils/jwt.js";
 
@@ -20,7 +19,10 @@ class UserController {
 
   saveUser = async (req, res) => {
     try {
-      const result = await this.service.saveUser(req.body);
+      const user = req.body;
+      user.image = req.file?.originalname;
+
+      const result = await this.service.saveUser(user);
 
       res.status(201).json({
         status: 201,

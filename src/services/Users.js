@@ -6,7 +6,7 @@ import logger from "../utils/Logger.js";
 class UsersService {
   constructor() {
     this.repository = new UsersRepository();
-    this.cartRepository = new CartsRepository()
+    this.cartRepository = new CartsRepository();
   }
 
   async getUsers() {
@@ -37,7 +37,7 @@ class UsersService {
     const newUser = await this.repository.save(data);
 
     logger.info("Creando carrito");
-    await this.cartRepository.createCart({user: newUser.id});
+    await this.cartRepository.createCart({ user: newUser.id });
 
     return newUser;
   }
@@ -51,12 +51,10 @@ class UsersService {
       throw new CustomError(400, "el parámetro name es necesario");
     if (!data.email)
       throw new CustomError(400, "el parámetro email es necesario");
-    // if (!data.age) throw new CustomError(400, "el parámetro age es necesario");
     if (!data.address)
       throw new CustomError(400, "el parámetro address es necesario");
     if (!data.phone)
       throw new CustomError(400, "el parámetro phone es necesario");
-    // if (!data.image) throw new CustomError(400, "el parámetro image es necesario");
   }
 }
 
