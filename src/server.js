@@ -10,9 +10,13 @@ import { engine } from "express-handlebars";
 import routerChat from "./routers/ChatRouter.js";
 import routerOrders from "./routers/OrdersRouter.js";
 import routerInfo from "./routers/InfoRouter.js";
+import ChatController from "./controllers/ChatController.js";
 
 const app = express();
 const httpServer = new HttpServer(app);
+
+// socket escuchando en /api/chat y /api/chat/:email
+ChatController.connectChat(httpServer);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,15 +36,19 @@ app.set("view engine", "hbs");
 app.set("http server", httpServer);
 
 app.get("/", (req, res) => {
-  res.redirect("/api/chat");
+  res.redirect("/chat");
 });
 
 app.use("/api/productos", routerProducts);
 app.use("/api/carrito", routerCarts);
 app.use("/api/usuarios", routerUsers);
-app.use("/api/chat", routerChat);
 app.use("/api/ordenes", routerOrders);
 app.use("/info", routerInfo);
+/**
+ * GET /chat devuelve una vista de hbs con todos los mensajes
+ * GET /chat/:email devuelve una vista de hbs con los mensajes del email pasado como parámetro
+ */
+ app.use("/chat", routerChat);
 
 const server = httpServer.listen(PORT, () =>
   logger.info(`Listen on ${server.address().port}`)

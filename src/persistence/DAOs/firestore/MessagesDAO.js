@@ -17,7 +17,7 @@ class MessagesDAOFirestore {
           ...doc.data(),
           id: doc.id,
         }))
-        .filter((message) => message.email !== email);
+        .filter((message) => message.email === email);
     } catch (error) {
       throw new CustomError(500, "error al obtener los mensajes", error);
     }
