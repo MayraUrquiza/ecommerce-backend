@@ -9,7 +9,7 @@ import { Server as HttpServer } from "http";
 import { engine } from "express-handlebars";
 import routerChat from "./routers/ChatRouter.js";
 import routerOrders from "./routers/OrdersRouter.js";
-import routerInfo from "./routers/infoRouter.js";
+import routerInfo from "./routers/InfoRouter.js";
 
 const app = express();
 const httpServer = new HttpServer(app);
