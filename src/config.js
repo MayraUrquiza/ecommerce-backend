@@ -1,10 +1,23 @@
 import dotenv from "dotenv";
+import yargs from "yargs";
+import { join } from "path";
 
-dotenv.config();
+const args = yargs(process.argv.slice(2));
+
+const argv = args
+  .alias({
+    m: "mode",
+  })
+  .default({
+    mode: "prod",
+  }).argv;
+
+dotenv.config({
+  path: join(process.cwd(), argv.mode === "prod" ? "prod.env" : "dev.env"),
+});
 
 export const PORT = process.env.PORT || 8080;
-export const MODE = process.env.MODE || "FORK";
-export const PERSISTENCE = process.env.PERSISTENCE || "mongoDB";
+export const PERSISTENCE = process.env.PERSISTENCE || "mongodb";
 export const MONGO_TIMEOUT = process.env.MONGO_TIMEOUT || 5000;
 export const MONGO_ATLAS_DATABASE_URI = process.env.MONGO_ATLAS_DATABASE_URI;
 export const FIRESTORE_DATABASE_URI = process.env.FIRESTORE_DATABASE_URI;
@@ -33,7 +46,8 @@ export const PRODUCTS_COLLECTION =
 export const CARTS_COLLECTION = process.env.CARTS_COLLECTION || "carritos";
 export const ORDERS_COLLECTION = process.env.ORDERS_COLLECTION || "ordenes";
 export const USERS_COLLECTION = process.env.USERS_COLLECTION || "users";
-export const MESSAGES_COLLECTION = process.env.MESSAGES_COLLECTION || "mensajes";
+export const MESSAGES_COLLECTION =
+  process.env.MESSAGES_COLLECTION || "mensajes";
 export const PRODUCTS_FILE = process.env.PRODUCTS_FILE || "productos.txt";
 export const CARTS_FILE = process.env.CARTS_FILE || "carritos.txt";
 export const ORDERS_FILE = process.env.ORDERS_FILE || "ordenes.txt";

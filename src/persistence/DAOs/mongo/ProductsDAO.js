@@ -1,4 +1,4 @@
-import ProductModel from "../../../models/product.js";
+import ProductModel from "../../../models/Product.js";
 import CustomError from "../../../utils/CustomError.js";
 import getDTO from "../../DTOs/ProductDTO.js";
 

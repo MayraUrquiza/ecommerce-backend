@@ -1,4 +1,4 @@
-import { Product } from "../models/product.js";
+import { Product } from "../models/Product.js";
 import ProductsDAOFactory from "../persistence/DAOs/factories/ProductsDAO.js";
 import getDTO from "../persistence/DTOs/ProductDTO.js";
 

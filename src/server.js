@@ -9,6 +9,7 @@ import { Server as HttpServer } from "http";
 import { engine } from "express-handlebars";
 import routerChat from "./routers/ChatRouter.js";
 import routerOrders from "./routers/OrdersRouter.js";
+import routerInfo from "./routers/infoRouter.js";
 
 const app = express();
 const httpServer = new HttpServer(app);
@@ -39,6 +40,7 @@ app.use("/api/carrito", routerCarts);
 app.use("/api/usuarios", routerUsers);
 app.use("/api/chat", routerChat);
 app.use("/api/ordenes", routerOrders);
+app.use("/info", routerInfo);
 
 const server = httpServer.listen(PORT, () =>
   logger.info(`Listen on ${server.address().port}`)

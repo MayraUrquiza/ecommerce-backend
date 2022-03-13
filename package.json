@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/server.js",
-    "watch": "nodemon ./src/server.js"
+    "start": "node ./src/server.js -m prod",
+    "watch": "nodemon ./src/server.js -m dev"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.4.2",
     "mongoose": "^6.2.4",
-    "socket.io": "^4.4.1"
+    "socket.io": "^4.4.1",
+    "yargs": "^17.3.1"
   }
 }
