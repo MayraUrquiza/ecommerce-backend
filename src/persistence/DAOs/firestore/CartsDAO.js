@@ -87,38 +87,18 @@ class CartsDAOFirestore {
 
       if (!oldCart) throw new CustomError(404, "carrito no encontrado", { id });
 
-      await doc.delete();
+      const data = {
+        ...oldCart.data(),
+        products: [],
+      };
+      await doc.update(data);
+      const newCart = await doc.get();
 
-      return getDTO({ ...oldCart.data(), id });
+      return getDTO({ ...newCart.data(), id: newCart.id });
     } catch (error) {
       throw new CustomError(
         error.status ?? 500,
         error.description ?? `error al eliminar el carrito con id ${id}`,
-        error.error ?? error
-      );
-    }
-  }
-
-  // eliminar carrito por usuario (puede que no haga falta)
-  async deleteCartByUserId(userId) {
-    try {
-      // TODO revisar bien si funciona
-      const docRef = DB.collection(cartsCollection);
-      const doc = docRef.where("user", "==", userId);
-      const oldCart = await doc.get();
-
-      if (!oldCart || oldCart.empty)
-        throw new CustomError(404, "carrito no encontrado", { id });
-
-      await oldCart.docs.foreach((doc) => doc.delete());
-
-      return getDTO({ ...oldCart.docs[0].data(), id });
-    } catch (error) {
-      c;
-      throw new CustomError(
-        error.status ?? 500,
-        error.description ??
-          `error al eliminar el carrito del usuario con id ${userId}`,
         error.error ?? error
       );
     }

@@ -1,31 +1,20 @@
-import * as fs from "fs";
-import { join } from "path";
 import CustomError from "../../../utils/CustomError.js";
 import getDTO from "../../DTOs/UserDTO.js";
 import configData from "../../../configDB.js";
+import FileSystemDAO from "./FileSystemDAO.js";
 
 const { usersFile } = configData.fileSystem;
-const FILE_PATH = join(process.cwd(), "data/");
-const FILE = FILE_PATH.concat(usersFile);
 
-class UsersDAOFilesystem {
-  async persist(array = []) {
-    const fileContent = JSON.stringify(array, null, 2);
-
-    if (!fs.existsSync(FILE_PATH)) fs.promises.mkdir(FILE_PATH);
-    return fs.promises.writeFile(FILE, fileContent);
-  }
-
-  async checkExistence() {
-    const exist = fs.existsSync(FILE);
-    if (!exist) await this.persist();
+class UsersDAOFilesystem extends FileSystemDAO {
+  constructor() {
+    super(usersFile);
   }
 
   async getAll() {
     try {
       await this.checkExistence();
 
-      const fileContent = await fs.promises.readFile(FILE);
+      const fileContent = await this.readFile();
       const users = JSON.parse(fileContent);
       return getDTO(users);
     } catch (error) {

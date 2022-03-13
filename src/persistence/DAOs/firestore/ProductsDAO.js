@@ -16,7 +16,6 @@ class ProductsDAOFirestore {
 
       return getDTO(products);
     } catch (error) {
-      if (typeof error === typeof CustomError) throw error;
       throw new CustomError(500, "error al obtener todos los productos", error);
     }
   }

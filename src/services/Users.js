@@ -1,3 +1,4 @@
+import CartsRepository from "../repositories/CartsRepository.js";
 import UsersRepository from "../repositories/UsersRepository.js";
 import CustomError from "../utils/CustomError.js";
 import logger from "../utils/Logger.js";
@@ -5,6 +6,7 @@ import logger from "../utils/Logger.js";
 class UsersService {
   constructor() {
     this.repository = new UsersRepository();
+    this.cartRepository = new CartsRepository()
   }
 
   async getUsers() {
@@ -18,19 +20,26 @@ class UsersService {
   }
 
   async saveUser(data) {
+    let user;
     try {
-      const user = await this.repository.getByEmail(data.email);
-      if (user)
-        throw new CustomError(
-          400,
-          `ya existe un usuario con el email ${data.email}`
-        );
+      user = await this.repository.getByEmail(data.email);
     } catch (error) {
       logger.info("Creando usuario");
     }
 
+    if (user)
+      throw new CustomError(
+        400,
+        `ya existe un usuario con el email ${data.email}`
+      );
+
     this.validateData(data);
-    return await this.repository.save(data);
+    const newUser = await this.repository.save(data);
+
+    logger.info("Creando carrito");
+    await this.cartRepository.createCart({user: newUser.id});
+
+    return newUser;
   }
 
   validateId(id) {

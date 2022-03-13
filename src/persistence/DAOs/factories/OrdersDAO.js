@@ -1,4 +1,4 @@
-import configData from "../configDB.js";
+import configData from "../../../configDB.js";
 import OrdersDAOMongo from "../mongo/OrdersDAO.js";
 import OrdersDAOFirestore from "../firestore/OrdersDAO.js";
 import OrdersDAOFilesystem from "../filesystem/OrdersDAO.js";
@@ -7,10 +7,10 @@ class OrdersDAOFactory {
   static getDAO() {
     const { useDatabase } = configData;
 
-    switch (useDatabase) {
+    switch (useDatabase.toLowerCase()) {
       case "firestore":
         return new OrdersDAOFirestore();
-      case "mongoDB":
+      case "mongodb":
         return new OrdersDAOMongo();
       case "filesystem":
       default:

@@ -7,10 +7,10 @@ class CartsDAOFactory {
   static getDAO() {
     const { useDatabase } = configData;
 
-    switch (useDatabase) {
+    switch (useDatabase.toLowerCase()) {
       case "firestore":
         return new CartsDAOFirestore();
-      case "mongoDB":
+      case "mongodb":
         return new CartsDAOMongo();
       case "filesystem":
       default:

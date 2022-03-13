@@ -1,31 +1,20 @@
-import * as fs from "fs";
-import { join } from "path";
 import CustomError from "../../../utils/CustomError.js";
 import getDTO from "../../DTOs/CartDTO.js";
 import configData from "../../../configDB.js";
+import FileSystemDAO from "./FileSystemDAO.js";
 
 const { cartsFile } = configData.fileSystem;
-const FILE_PATH = join(process.cwd(), "data/");
-const FILE = FILE_PATH.concat(cartsFile);
 
-class CartsDAOFilesystem {
-  async persist(array = []) {
-    const fileContent = JSON.stringify(array, null, 2);
-
-    if (!fs.existsSync(FILE_PATH)) fs.promises.mkdir(FILE_PATH);
-    return fs.promises.writeFile(FILE, fileContent);
-  }
-
-  async checkExistence() {
-    const exist = fs.existsSync(FILE);
-    if (!exist) await this.persist();
+class CartsDAOFilesystem extends FileSystemDAO {
+  constructor() {
+    super(cartsFile);
   }
 
   async getCarts() {
     try {
       await this.checkExistence();
 
-      const fileContent = await fs.promises.readFile(FILE);
+      const fileContent = await this.readFile();
       const carts = JSON.parse(fileContent);
       return getDTO(carts);
     } catch (error) {
@@ -119,9 +108,12 @@ class CartsDAOFilesystem {
 
       if (!cart) throw new CustomError(404, "carrito no encontrado", { id });
 
-      const filteredContent = content.filter(
-        (cart) => cart.id !== parseInt(id)
-      );
+      const filteredContent = content.map((cart) => {
+        if (cart.id === parseInt(id)) {
+          cart.products = [];
+        }
+        return cart;
+      });
       await this.persist(filteredContent);
 
       return getDTO(cart);
@@ -129,32 +121,6 @@ class CartsDAOFilesystem {
       throw new CustomError(
         error.status ?? 500,
         error.description ?? `error al eliminar el carrito con id ${id}`,
-        error.error ?? error
-      );
-    }
-  }
-
-  // eliminar carrito por usuario (puede que no haga falta)
-  async deleteCartByUserId(userId) {
-    try {
-      await this.checkExistence();
-
-      const content = await this.getCarts();
-      const cart = content.find((cart) => cart.user === userId);
-
-      if (!cart) throw new CustomError(404, "carrito no encontrado", { id });
-
-      const filteredContent = content.filter(
-        (cart) => cart.id !== parseInt(id)
-      );
-      await this.persist(filteredContent);
-
-      return getDTO(cart);
-    } catch (error) {
-      throw new CustomError(
-        error.status ?? 500,
-        error.description ??
-          `error al eliminar el carrito del usuario con id ${userId}`,
         error.error ?? error
       );
     }

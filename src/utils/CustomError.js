@@ -2,7 +2,7 @@ class CustomError {
   constructor(status, description, error = undefined) {
     this.status = status;
     this.description = description;
-    if (error) this.error = error;
+    if (error) this.error = error.message ?? error;
   }
 }
 

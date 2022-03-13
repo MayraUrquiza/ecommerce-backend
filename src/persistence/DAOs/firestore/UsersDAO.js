@@ -16,7 +16,6 @@ class UsersDAOFirestore {
 
       return getDTO(users);
     } catch (error) {
-      if (typeof error === typeof CustomError) throw error;
       throw new CustomError(500, "error al obtener todos los usuarios", error);
     }
   }
@@ -26,8 +25,7 @@ class UsersDAOFirestore {
       const doc = DB.collection(usersCollection).doc(id);
       const user = await doc.get();
 
-      if (!user)
-        throw new CustomError(404, "usuario no encontrado", { id });
+      if (!user) throw new CustomError(404, "usuario no encontrado", { id });
 
       return getDTO({ ...user.data(), id });
     } catch (error) {

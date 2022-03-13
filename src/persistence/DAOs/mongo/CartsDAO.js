@@ -67,37 +67,19 @@ class CartsDAOMongo {
   // eliminar carrito por id
   async deleteCartById(id) {
     try {
-      const result = await CartModel.findByIdAndRemove(id, {
-        new: true,
-      }).lean();
+      const result = await CartModel.findByIdAndUpdate(
+        id,
+        { products: [] },
+        { new: true }
+      ).lean();
 
       if (!result) throw new CustomError(404, "carrito no encontrado", { id });
+
       return getDTO({ ...result, id: result._id });
     } catch (error) {
       throw new CustomError(
         error.status ?? 500,
         error.description ?? `error al eliminar el carrito con id ${id}`,
-        error.error ?? error
-      );
-    }
-  }
-
-  // eliminar carrito por usuario (puede que no haga falta)
-  async deleteCartByUserId(userId) {
-    try {
-      const result = await CartModel.findOneAndRemove(
-        { user: userId },
-        { new: true }
-      ).lean();
-
-      if (!result)
-        throw new CustomError(404, "carrito no encontrado", { user: userId });
-      return getDTO({ ...result, id: result._id });
-    } catch (error) {
-      throw new CustomError(
-        error.status ?? 500,
-        error.description ??
-          `error al eliminar el carrito del usuario con id ${userId}`,
         error.error ?? error
       );
     }

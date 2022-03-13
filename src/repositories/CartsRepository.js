@@ -39,11 +39,6 @@ class CartsRepository {
     const cart = await this.dao.deleteCartById(id);
     return new Cart(cart);
   }
-
-  async deleteCartByUserId(id) {
-    const cart = await this.dao.deleteCartByUserId(id);
-    return new Cart(cart);
-  }
 }
 
 export default CartsRepository;

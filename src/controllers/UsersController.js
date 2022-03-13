@@ -21,8 +21,6 @@ class UserController {
   saveUser = async (req, res) => {
     try {
       const result = await this.service.saveUser(req.body);
-      const service = new CartsService();
-      await service.saveCart({user: result.id});
 
       res.status(201).json({
         status: 201,

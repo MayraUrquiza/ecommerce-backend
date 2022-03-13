@@ -19,7 +19,6 @@ class MessagesDAOFirestore {
         }))
         .filter((message) => message.email !== email);
     } catch (error) {
-      if (typeof error === typeof CustomError) throw error;
       throw new CustomError(500, "error al obtener los mensajes", error);
     }
   }
