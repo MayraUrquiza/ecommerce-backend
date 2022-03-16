@@ -2,6 +2,7 @@ import CartsRepository from "../repositories/CartsRepository.js";
 import UsersRepository from "../repositories/UsersRepository.js";
 import CustomError from "../utils/CustomError.js";
 import logger from "../utils/Logger.js";
+import MailService from "./Mails.js";
 
 class UsersService {
   constructor() {
@@ -39,6 +40,8 @@ class UsersService {
     logger.info("Creando carrito");
     await this.cartRepository.createCart({ user: newUser.id });
 
+    logger.info("Enviando mail");
+    await MailService.sendNewUserMail(newUser);
     return newUser;
   }
 

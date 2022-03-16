@@ -1,7 +1,9 @@
 import CartsRepository from "../repositories/CartsRepository.js";
 import OrdersRepository from "../repositories/OrdersRepository.js";
 import UsersRepository from "../repositories/UsersRepository.js";
+import CustomError from "../utils/CustomError.js";
 import logger from "../utils/Logger.js";
+import MailService from "./Mails.js";
 
 class OrdersService {
   constructor() {
@@ -20,6 +22,9 @@ class OrdersService {
 
     const cart = await this.cartsRepository.getCartById(cartId);
 
+    if (!cart.products.length)
+      throw new CustomError(400, "El carrito está vacío");
+
     const order = {
       user: cart.user,
       products: cart.products,
@@ -31,6 +36,10 @@ class OrdersService {
 
     logger.info("Eliminando contenido de carrito");
     await this.cartsRepository.deleteCartById(cartId);
+
+    logger.info("Enviando mail");
+    const user = await this.usersRepository.getById(cart.user);
+    await MailService.sendPurchaseMail(user, email, cart.products);
 
     return newOrder;
   }

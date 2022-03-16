@@ -32,15 +32,11 @@ export const FIRESTORE_TOKEN_URI = process.env.FIRESTORE_TOKEN_URI;
 export const FIRESTORE_AUTH_PROVIDER_X509_CERT_URL =
   process.env.FIRESTORE_AUTH_PROVIDER_X509_CERT_URL;
 export const FIRESTORE_CLIENT_X509_URL = process.env.FIRESTORE_CLIENT_X509_URL;
-// export const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-// export const ADMIN_WHATSAPP_NUMBER = process.env.ADMIN_WHATSAPP_NUMBER;
-// export const NODEMAILER_HOST = process.env.NODEMAILER_HOST;
-// export const NODEMAILER_PORT = process.env.NODEMAILER_PORT;
-// export const NODEMAILER_AUTH_USER = process.env.NODEMAILER_AUTH_USER;
-// export const NODEMAILER_AUTH_PASS = process.env.NODEMAILER_AUTH_PASS;
-// export const TWILIO_WHATSAPP_NUMBER = process.env.TWILIO_WHATSAPP_NUMBER;
-// export const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-// export const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+export const NODEMAILER_HOST = process.env.NODEMAILER_HOST;
+export const NODEMAILER_PORT = process.env.NODEMAILER_PORT;
+export const NODEMAILER_AUTH_USER = process.env.NODEMAILER_AUTH_USER;
+export const NODEMAILER_AUTH_PASS = process.env.NODEMAILER_AUTH_PASS;
 export const PRODUCTS_COLLECTION =
   process.env.PRODUCTS_COLLECTION || "productos";
 export const CARTS_COLLECTION = process.env.CARTS_COLLECTION || "carritos";
