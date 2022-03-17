@@ -6,7 +6,7 @@ import {
   NODEMAILER_PORT,
 } from "../config.js";
 import nodemailer from "nodemailer";
-import logger from "../utils/logger.js";
+import logger from "../utils/Logger.js";
 
 class MailService {
   static sendMail = async (to, subject, content, attachmentPaths = []) => {
