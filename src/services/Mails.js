@@ -38,7 +38,11 @@ class MailService {
     await this.sendMail(
       ADMIN_EMAIL,
       "Nuevo registro",
-      `<h1>Nuevo usuario registrado</h1><p>Nombre: ${user.name}</p><p>Edad: ${user.age}</p><p>Email: ${user.email}</p><p>Teléfono: ${user.phone}</p><p>Dirección: ${user.address}</p>`,
+      `<h1>Nuevo usuario registrado</h1><p>Nombre: ${user.name}</p><p>Edad: ${
+        user.age ?? "No informada"
+      }</p><p>Email: ${user.email}</p><p>Teléfono: ${
+        user.phone
+      }</p><p>Dirección: ${user.address ?? "No informada"}</p>`,
       user.image ? [`./public/uploads/${user.image}`] : []
     );
   };

@@ -54,8 +54,8 @@ class UsersService {
       throw new CustomError(400, "el parámetro name es necesario");
     if (!data.email)
       throw new CustomError(400, "el parámetro email es necesario");
-    if (!data.address)
-      throw new CustomError(400, "el parámetro address es necesario");
+    if (!data.password)
+      throw new CustomError(400, "el parámetro password es necesario");
     if (!data.phone)
       throw new CustomError(400, "el parámetro phone es necesario");
   }

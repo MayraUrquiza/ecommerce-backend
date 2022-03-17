@@ -5,7 +5,7 @@ class UserDTO {
     this.password = password;
     this.email = email;
     if (age) this.age = age;
-    this.address = address;
+    if (address) this.address = address;
     this.phone = phone;
     if (image) this.image = image;
   }
